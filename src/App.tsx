@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {Map, YMaps} from 'react-yandex-maps';
+import {Map, RulerControl, TypeSelector, YMaps, ZoomControl} from 'react-yandex-maps';
 
 function App() {
 
@@ -56,7 +56,11 @@ function App() {
       <div className={'mapArea'}>
         <YMaps>
           <div>
-            <Map defaultState={{center: [53.917512, 27.604740], zoom: 15}}/>
+            <Map className={'map'} defaultState={{center: [53.917512, 27.604740], zoom: 15}}>
+              <ZoomControl options={{position: {right: 10, top: 10}}}/>
+              <TypeSelector options={{position: {left: 10, top: 10}}}/>
+              <RulerControl options={{position: {right: 50, top: 10}}}/>
+            </Map>
           </div>
         </YMaps>
       </div>
