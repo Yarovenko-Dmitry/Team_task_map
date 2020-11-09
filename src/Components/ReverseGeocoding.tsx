@@ -34,6 +34,8 @@ export const ReverseGeocoding = () => {
              onChange={onChangeLongitudeHandler}
              placeholder={'Longitude'}/>
 
+
+
       {/*<input type={'button'} name={'button'} value={'set object'}/>*/}
       {/*<input type={'button'} name={'button'} value={'find object'}/>*/}
       {/*<input type={'button'} name={'button'} value={'show lasy map'} onClick={onClickShowMapHandler}/>*/}
