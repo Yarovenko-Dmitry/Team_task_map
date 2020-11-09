@@ -1,7 +1,23 @@
 .App {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  margin: 5%;
+   margin: 5%;
 }
+
+.searchAddNavigation {
+  border: 1px solid red;
+}
+
+.addObject{
+  border: 1px solid #4cff00;
+}
+
+.searchObject{
+  border: 1px solid #aa00ff;
+}
+
+.mapArea {
+  border: 1px solid #0051ff;
+}
+
 
