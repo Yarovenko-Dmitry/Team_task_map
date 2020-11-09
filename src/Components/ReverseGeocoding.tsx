@@ -10,18 +10,16 @@ export const ReverseGeocoding = () => {
   console.log(longitude)
   const onChangeLatitudeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setLatitude(+e.currentTarget.value);
-    console.log('latitude ',latitude);
+    console.log('latitude ', latitude);
   }
   const onChangeLongitudeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setLongitude(+e.currentTarget.value);
-    console.log('longitude ',longitude);
+    console.log('longitude ', longitude);
   }
 
   const onClickShowMapHandler = () => {
-
     console.log('onClick ');
   }
-
 
   return (
     <div>
