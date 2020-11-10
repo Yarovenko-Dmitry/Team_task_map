@@ -1,8 +1,27 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Map, RulerControl, TypeSelector, YMaps, ZoomControl} from 'react-yandex-maps';
+import {onClickSearchObjectsHandler} from './hendlers/apiHendler';
+
+
 
 function App() {
+  const [latitude, setLatitude] = useState(50.5000)
+  const [longitude, setLongitude] = useState(30.5000)
+  const [locationName, setLocationName] = useState('')
+
+  const onChangeLocationNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setLocationName(e.currentTarget.value);
+  }
+
+  const handleClickSearchObjectsButton = () => {
+    onClickSearchObjectsHandler(locationName).then((coordinates: Array<string>) => {
+      if(coordinates.length){
+        setLatitude(Number(coordinates[0]));
+        setLongitude(+coordinates[1]);
+      }
+    })
+  }
 
   return (
     <div className="App">
@@ -34,7 +53,7 @@ function App() {
           <div>Найти объекты</div>
           <div>
             <div>Местность</div>
-            <input type={'text'} name={'location'} placeholder={'Название региона'}/>
+            <input type={'text'} name={'location'} placeholder={'Название региона'} onChange={onChangeLocationNameHandler}/>
             <div>
               <div>координаты</div>
               <input type={'text'} name={'latitudeCoordinate'} placeholder={'Latitude'}/>
@@ -42,21 +61,21 @@ function App() {
             </div>
           </div>
           <select>
-            <option>Школа детей</option>
-            <option>Курсы взрослых</option>
+            <option>Школа для детей</option>
+            <option>Курсы для взрослых</option>
             <option>IT ВУЗ</option>
           </select>
           <div>
             <div>Количество объектов</div>
             <input type={'number'} name={'objectNumber'}/>
           </div>
-          <input type={'button'} name={'searchObjects'} value={'Найти объекты'}/>
+          <input type={'button'} name={'searchObjects'} value={'Найти объекты'} onClick={handleClickSearchObjectsButton}/>
         </div>
       </div>
       <div className={'mapArea'}>
         <YMaps>
           <div>
-            <Map className={'map'} defaultState={{center: [53.917512, 27.604740], zoom: 15}}>
+            <Map className={'map'} state={{center: [latitude, longitude], zoom: 10}}>
               <ZoomControl options={{position: {right: 10, top: 10}}}/>
               <TypeSelector options={{position: {left: 10, top: 10}}}/>
               <RulerControl options={{position: {right: 50, top: 10}}}/>
