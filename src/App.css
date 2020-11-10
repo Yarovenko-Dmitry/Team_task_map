@@ -1,18 +1,18 @@
 .App {
   display: flex;
   align-items: center;
-   margin: 5%;
+  margin: 5%;
 }
 
 .searchAddNavigation {
   border: 1px solid red;
 }
 
-.addObject{
+.addObject {
   border: 1px solid #4cff00;
 }
 
-.searchObject{
+.searchObject {
   border: 1px solid #aa00ff;
 }
 
@@ -20,4 +20,7 @@
   border: 1px solid #0051ff;
 }
 
-
+.map {
+  height: 750px;
+  width: 1000px;
+}

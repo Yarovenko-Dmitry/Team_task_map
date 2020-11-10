@@ -7,3 +7,6 @@
 5) Belik85
 
  [Link to project](https://yarovenko-dmitry.github.io/Team_task_map/)
+  [quick check](http://av-gps.com/getlocation/)
+ 
+ 
