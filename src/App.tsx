@@ -2,6 +2,9 @@ import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Map, RulerControl, TypeSelector, YMaps, ZoomControl} from 'react-yandex-maps';
 import {onClickSearchObjectsHandler} from './hendlers/apiHendler';
+import AddNewSchoolsInput from "./Components/AddNewSchoolsInput";
+import AddNewSchoolsButton from "./Components/AddNewSchoolButton";
+import {v1} from "uuid";
 
 
 
@@ -22,6 +25,32 @@ function App() {
       }
     })
   }
+  //стейт для добавления школ
+  let [itMinskSchools, setItMinskSchools] = useState([
+    {
+      title: '',
+      id: v1(),
+    },
+  ])
+  console.log(itMinskSchools);
+
+  function addNewItSchoolMinsk(title: string) {
+    let NewItSchoolMinsk = {title: title, id: v1()};
+    let addNewItSchoolMinsk = [NewItSchoolMinsk, ...itMinskSchools];
+    setItMinskSchools(addNewItSchoolMinsk);
+  }
+
+
+  // стейт для инпута и кнопки
+  let [title, setTitle] = useState('');
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+     if (e.currentTarget.value.length > 20) {
+       console.log('Value is more')
+     }
+    setTitle(e.currentTarget.value)
+  }
+
+
 
   return (
     <div className="App">
@@ -35,7 +64,7 @@ function App() {
           </div>
           <div>
             <div>описание</div>
-            <input type={'text'} name={'description'}/>
+            <AddNewSchoolsInput value={title} onChange={onChangeHandler} setTitle={setTitle}/>
           </div>
           <div>
             <div>координаты</div>
@@ -47,7 +76,7 @@ function App() {
             {/* возможно добавить изображение с видом метки*/}
             <input type={'button'} name={'changeMarkType'} value={'Сменить вид метки'}/>
           </div>
-          <input type={'button'} name={'addObject'} value={'Добавить школу'}/>
+          <AddNewSchoolsButton addNewItSchoolMinsk={addNewItSchoolMinsk} value = {title}/>
         </div>
         <div className={'searchObject'}>
           <div>Найти объекты</div>
@@ -83,7 +112,6 @@ function App() {
           </div>
         </YMaps>
       </div>
-
     </div>
   );
 }
