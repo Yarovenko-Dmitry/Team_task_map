@@ -1,86 +1,131 @@
-import React, {useState} from 'react';
-
+import React, {ChangeEvent, useState} from 'react';
 import './App.css';
-import {YMaps, Map, Placemark, SearchControl, ZoomControl, TypeSelector} from 'react-yandex-maps';
+import {Map, RulerControl, TypeSelector, YMaps, ZoomControl} from 'react-yandex-maps';
+import {onClickSearchObjectsHandler} from './hendlers/apiHendler';
+import AddNewSchoolsInput from "./Components/AddNewSchoolsInput";
+// import AddNewSchoolsButton from "./Components/AddNewSchoolButton";
+import {v1} from "uuid";
 
-const App = () => {
 
-    let [newcoords, setCoords] = useState()   //sw северная широто vd восточная долгота
+function App() {
+    const [latitude, setLatitude] = useState(50.5000)
+    const [longitude, setLongitude] = useState(30.5000)
+    const [locationName, setLocationName] = useState('')
+    // название школы
+    const [schoolName, setSchoolName] = useState('')
 
-
-    const myPoints = [
-        {coords: [55.77, 37.46], name: 'School!!1'},
-        {coords: [55.66, 37.48], name: 'School2'},
-
-    ];
-    let cords
-
-    function getcoord(e: any) {
-        cords = e.get('coords')
-        console.log(cords)
-        setCoords(cords)
+    const onChangeSchoolNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setSchoolName(e.currentTarget.value);
     }
 
-    let [placemark, setPlacemark] = useState(myPoints)
 
-    let lox = [...placemark]
+    const onChangeLocationNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setLocationName(e.currentTarget.value);
+    }
 
-    function addPlacemark() {
-        if (newcoords) {
-            let place: any = {coords: newcoords, name: input}
-            lox.push(place)
-            setPlacemark(lox)
-            alert(lox)
-            setInput("IncubaToR")
+    const handleClickSearchObjectsButton = () => {
+        onClickSearchObjectsHandler(locationName).then((coordinates: Array<string>) => {
+            if (coordinates.length) {
+                setLatitude(Number(coordinates[0]));
+                setLongitude(+coordinates[1]);
+            }
+        })
+    }
+    //стейт для добавления школ
+    type ItMinskSchoolType = {
+        description: string,
+        id: string,
+        schoolName: string,
+    }
+    let [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>([]   )
+
+    type AddNewItSchoolMinskType =
+
+    let addNewItSchoolMinsk = (description: string, schoolName: string) => {
+        let NewItSchoolMinsk = {id: v1(), schoolName, description};
+        let addNewItSchoolMinsk = [NewItSchoolMinsk, ...itMinskSchools];
+        setItMinskSchools(addNewItSchoolMinsk);
+    }
+
+
+    // стейт для инпута и кнопки
+    let [title, setTitle] = useState('');
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.value.length > 20) {
+            console.log('Value is more')
         }
+        setTitle(e.currentTarget.value)
     }
 
-    let [input, setInput] = useState("IncubaToR")
-
-    function onChangeHandler(e: any) {
-        setInput(e.currentTarget.value)
-    }
 
     return (
-        <>
-            <div>coordinati click:{newcoords}</div>
-            <YMaps>
-                <Map width="75vw" height="75vh" onClick={(e: any) => {
-                    getcoord(e)
-                }}
-                     defaultState={{
-                         center: [55.751574, 37.573856],
-                         zoom: 5,
-                     }}
-                >
-                    <SearchControl options={{float: 'right'}}/>
-                    <ZoomControl options={{float: 'right'}}/>
-                    <TypeSelector options={{float: 'right'}}/>
-                    {placemark.map(coordinate => <Placemark geometry={coordinate.coords}
+        <div className="App">
+            <div className={'searchAddNavigation'}>
+                {/* потом может зарефакторим в формик*/}
+                <div className={'addObject'}>
+                    <div>добавить школу</div>
+                    <div>
+                        <div>название школы</div>
+                        <input type={'text'} name={'schoolName'} value={schoolName}
+                               onChange={onChangeSchoolNameHandler}/>
 
-                                                            modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                                                            properties={{
-                                                                hintContent: coordinate.name,
-                                                                balloonContent: coordinate.name,
-                                                            }}
-
-                                                            options={{
-                                                                iconLayout: 'default#image',
-                                                                iconImageHref: 'https://i.ytimg.com/vi/fIzA4te9yBk/maxresdefault.jpg',
-                                                                iconImageSize: [100, 36],
-                                                                iconImageOffset: [-50, -18],
-                                                            }}
-                        />
-                    )}
-
-                </Map>
-            </YMaps>
-
-            <div>
-                <div>NAme of school</div>
-                <input value={input} onChange={onChangeHandler}/>
-                <button onClick={addPlacemark}>AddSchool</button>
+                    </div>
+                    <div>
+                        <div>описание</div>
+                        <AddNewSchoolsInput value={title} onChange={onChangeHandler} setTitle={setTitle}/>
+                    </div>
+                    <div>
+                        <div>координаты</div>
+                        <input type={'text'} name={'latitudeCoordinate'} placeholder={'Latitude'}/>
+                        <input type={'text'} name={'longitudeCoordinate'} placeholder={'Longitude'}/>
+                    </div>
+                    <input type={'button'} name={'selectCoordinate'} value={'Указать объект на карте'}/>
+                    <div>
+                        {/* возможно добавить изображение с видом метки*/}
+                        <input type={'button'} name={'changeMarkType'} value={'Сменить вид метки'}/>
+                    </div>
+                    {/*<AddNewSchoolsButton addNewItSchoolMinsk={addNewItSchoolMinsk} value={title}/>*/}
+                    <input type={'button'} name={'addNewItSchoolMinsk'} value={'Найти объекты'}
+                           onClick={addNewItSchoolMinsk}/>
+                </div>
+                <div className={'searchObject'}>
+                    <div>Найти объекты</div>
+                    <div>
+                        <div>Местность</div>
+                        <input type={'text'} name={'location'} placeholder={'Название региона'}
+                               onChange={onChangeLocationNameHandler}/>
+                        <div>
+                            <div>координаты</div>
+                            <input type={'text'} name={'latitudeCoordinate'} placeholder={'Latitude'}/>
+                            <input type={'text'} name={'longitudeCoordinate'} placeholder={'Longitude'}/>
+                        </div>
+                    </div>
+                    <select>
+                        <option>Школа для детей</option>
+                        <option>Курсы для взрослых</option>
+                        <option>IT ВУЗ</option>
+                    </select>
+                    <div>
+                        <div>Количество объектов</div>
+                        <input type={'number'} name={'objectNumber'}/>
+                    </div>
+                    <input type={'button'} name={'searchObjects'} value={'Найти объекты'}
+                           onClick={handleClickSearchObjectsButton}/>
+                </div>
             </div>
-        </>)
-};
-export default App
+            <div className={'mapArea'}>
+                <YMaps>
+                    <div>
+                        <Map className={'map'} state={{center: [latitude, longitude], zoom: 10}}>
+                            <ZoomControl options={{position: {right: 10, top: 10}}}/>
+                            <TypeSelector options={{position: {left: 10, top: 10}}}/>
+                            <RulerControl options={{position: {right: 50, top: 10}}}/>
+                        </Map>
+                    </div>
+                </YMaps>
+            </div>
+        </div>
+    );
+}
+
+export default App;
