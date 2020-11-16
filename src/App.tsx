@@ -9,6 +9,12 @@ function App() {
   const [latitude, setLatitude] = useState(50.5000)
   const [longitude, setLongitude] = useState(30.5000)
   const [locationName, setLocationName] = useState('')
+  const [schoolName, setSchoolName] = useState ('')
+
+  const onChangeSchoolNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("it-incubator " ,schoolName)
+    setSchoolName(e.currentTarget.value);
+  }
 
   const onChangeLocationNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setLocationName(e.currentTarget.value);
@@ -31,7 +37,7 @@ function App() {
           <div>добавить школу</div>
           <div>
             <div>название школы</div>
-            <input type={'text'} name={'schoolName'}/>
+            <input type={'text'} name={'schoolName'} value={schoolName} onChange={onChangeSchoolNameHandler}/>
           </div>
           <div>
             <div>описание</div>
