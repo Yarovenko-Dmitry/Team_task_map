@@ -3,7 +3,7 @@ import './App.css';
 import {Map, RulerControl, TypeSelector, YMaps, ZoomControl} from 'react-yandex-maps';
 import {onClickSearchObjectsHandler} from './hendlers/apiHendler';
 import AddNewSchoolsInput from "./Components/AddNewSchoolsInput";
-// import AddNewSchoolsButton from "./Components/AddNewSchoolButton";
+import AddNewSchoolsButton from "./Components/AddNewSchoolButton";
 import {v1} from "uuid";
 
 
@@ -31,6 +31,7 @@ function App() {
             }
         })
     }
+
     //стейт для добавления школ
     type ItMinskSchoolType = {
         description: string,
@@ -39,9 +40,14 @@ function App() {
     }
     let [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>([]   )
 
-    type AddNewItSchoolMinskType =
+    const handleClickAddSchoolButton = () => {
+        addNewItSchoolMinsk(title, schoolName)
+        console.log(itMinskSchools)
+    }
 
-    let addNewItSchoolMinsk = (description: string, schoolName: string) => {
+
+
+    let addNewItSchoolMinsk = (description: string, schoolName: string):void => {
         let NewItSchoolMinsk = {id: v1(), schoolName, description};
         let addNewItSchoolMinsk = [NewItSchoolMinsk, ...itMinskSchools];
         setItMinskSchools(addNewItSchoolMinsk);
@@ -86,7 +92,7 @@ function App() {
                     </div>
                     {/*<AddNewSchoolsButton addNewItSchoolMinsk={addNewItSchoolMinsk} value={title}/>*/}
                     <input type={'button'} name={'addNewItSchoolMinsk'} value={'Найти объекты'}
-                           onClick={addNewItSchoolMinsk}/>
+                           onClick={handleClickAddSchoolButton}/>
                 </div>
                 <div className={'searchObject'}>
                     <div>Найти объекты</div>
