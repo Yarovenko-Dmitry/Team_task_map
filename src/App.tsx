@@ -13,15 +13,41 @@ type ItMinskSchoolType = {
 }
 
 function App() {
+
+  const TESTitMinskSchools = [
+    {
+      id: "d2c832a0-28d6-11eb-a6bf-0d5927730644",
+      newSchoolLatitude: 50.4292,
+      newSchoolLongitude: 30.4931,
+      schoolDescription: "тест 1",
+      schoolName: "1"
+    },
+    {
+      id: "d2c832a0-28d6-11eb-a6bf-0d5927730645",
+      newSchoolLatitude: 50.4590,
+      newSchoolLongitude: 30.5391,
+      schoolDescription: "тест 2",
+      schoolName: "2"
+    },
+    {
+      id: "d2c832a0-28d6-11eb-a6bf-0d5927730646",
+      newSchoolLatitude: 50.4149,
+      newSchoolLongitude: 30.6057,
+      schoolDescription: "тест 3",
+      schoolName: "3"
+    }
+  ]
+
   const [schoolName, setSchoolName] = useState<string>('');
   const [schoolDescription, setSchoolDescription] = useState<string>('');
   const [newSchoolLatitude, setNewSchoolLatitude] = useState<any>(0);
   const [newSchoolLongitude, setNewSchoolLongitude] = useState<any>(0);
-  const [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>([]);
+  const [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>(TESTitMinskSchools);
 
   const [locationSearchObject, setLocationSearchObject] = useState<string>('');
   const [searchObjectLatitude, setSearchObjectLatitude] = useState<number>(50.5000);
   const [searchObjectLongitude, setSearchObjectLongitude] = useState<number>(30.5000);
+
 
   const onChangeSchoolNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSchoolName(e.currentTarget.value);
@@ -132,6 +158,22 @@ function App() {
               <ZoomControl options={{position: {right: 10, top: 10}}}/>
               <TypeSelector options={{position: {left: 10, top: 10}}}/>
               <RulerControl options={{position: {right: 50, top: 10}}}/>
+
+              {itMinskSchools.map((itMinskSchool:ItMinskSchoolType) => <Placemark
+                  geometry={[itMinskSchool.newSchoolLatitude, itMinskSchool.newSchoolLongitude]}
+                  modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
+                  properties={{
+                    hintContent: itMinskSchool.schoolName,
+                    balloonContent: itMinskSchool.schoolDescription,
+                  }}
+                  options={{
+                    iconLayout: 'default#image',
+                    iconImageHref: 'https://image.freepik.com/free-vector/3d-gps-red-color-icon-dropping-on-street-map-on-white_175838-446.jpg',
+                    iconImageSize: [80, 60],
+                    iconImageOffset: [0, 0],
+                  }}
+                />
+              )}
             </Map>
           </div>
         </YMaps>
