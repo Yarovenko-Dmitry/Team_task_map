@@ -2,8 +2,6 @@ import React, {ChangeEvent, useState} from 'react';
 import './App.css';
 import {Map, RulerControl, TypeSelector, YMaps, ZoomControl} from 'react-yandex-maps';
 import {onClickSearchObjectsHandler} from './hendlers/apiHendler';
-import AddNewSchoolsInput from "./Components/AddNewSchoolsInput";
-import AddNewSchoolsButton from "./Components/AddNewSchoolButton";
 import {v1} from "uuid";
 
 
@@ -13,6 +11,20 @@ function App() {
     const [locationName, setLocationName] = useState('')
     // название школы
     const [schoolName, setSchoolName] = useState('')
+    const [coordinate, setCoordinate] = useState('')
+    const [latitudeNewSchool, setLatitudeNewSchool] = useState<any>(0)
+    const [longitudeNewSchool, setLongitudeNewSchool] = useState<any>(0)
+
+    // const AddCoordinatsNewSchool = (e: any) => {
+    //     setCoordinate(e.currentTarget.value)
+    //     if (e.currentTarget.value === '1' || '2' || '3') {
+    //         setCoordinate('.')
+    //     } else {
+    //         setCoordinate(e.currentTarget.value)
+    //     }
+    //
+    // }
+
 
     const onChangeSchoolNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSchoolName(e.currentTarget.value);
@@ -28,6 +40,7 @@ function App() {
             if (coordinates.length) {
                 setLatitude(Number(coordinates[0]));
                 setLongitude(+coordinates[1]);
+
             }
         })
     }
@@ -37,32 +50,46 @@ function App() {
         description: string,
         id: string,
         schoolName: string,
+        latitude: any,
+        longitude: any
+
+
     }
-    let [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>([]   )
+    let [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>([])
 
     const handleClickAddSchoolButton = () => {
-        addNewItSchoolMinsk(title, schoolName)
+        addNewItSchoolMinsk(description, schoolName)
         console.log(itMinskSchools)
     }
 
 
-
-    let addNewItSchoolMinsk = (description: string, schoolName: string):void => {
-        let NewItSchoolMinsk = {id: v1(), schoolName, description};
+    let addNewItSchoolMinsk = (description: string, schoolName: string) => {
+        let NewItSchoolMinsk = {
+            id: v1(),
+            schoolName,
+            description,
+            latitude: latitudeNewSchool,
+            longitude: longitudeNewSchool
+        };
         let addNewItSchoolMinsk = [NewItSchoolMinsk, ...itMinskSchools];
         setItMinskSchools(addNewItSchoolMinsk);
     }
 
 
     // стейт для инпута и кнопки
-    let [title, setTitle] = useState('');
+    let [description, setTitle] = useState('');
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.value.length > 20) {
             console.log('Value is more')
         }
         setTitle(e.currentTarget.value)
     }
-
+    const AddLatitudeCoordinateNewSchool = (e: ChangeEvent<HTMLInputElement>) => {
+        setLatitudeNewSchool(e.currentTarget.value)
+    }
+    const AddLongitudeCoordinateNewSchool = (e: ChangeEvent<HTMLInputElement>) => {
+        setLongitudeNewSchool(e.currentTarget.value)
+    }
 
     return (
         <div className="App">
@@ -78,12 +105,14 @@ function App() {
                     </div>
                     <div>
                         <div>описание</div>
-                        <AddNewSchoolsInput value={title} onChange={onChangeHandler} setTitle={setTitle}/>
+                        <input type='text' onChange={onChangeHandler}/>
                     </div>
                     <div>
                         <div>координаты</div>
-                        <input type={'text'} name={'latitudeCoordinate'} placeholder={'Latitude'}/>
-                        <input type={'text'} name={'longitudeCoordinate'} placeholder={'Longitude'}/>
+                        {/*<input type={'text'} onChange={AddCoordinatsNewSchool} value={coordinate}/>*/}
+                        {/*<input type={'text'} onChange={AddCoordinatsNewSchool} value={coordinate}/>*/}
+                        <input type={'text'} onChange={AddLatitudeCoordinateNewSchool}/>
+                        <input type={'text'} onChange={AddLongitudeCoordinateNewSchool}/>
                     </div>
                     <input type={'button'} name={'selectCoordinate'} value={'Указать объект на карте'}/>
                     <div>
