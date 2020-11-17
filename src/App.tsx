@@ -109,9 +109,7 @@ function App() {
                     </div>
                     <div>
                         <div>координаты</div>
-                        {/*<input type={'text'} onChange={AddCoordinatsNewSchool} value={coordinate}/>*/}
-                        {/*<input type={'text'} onChange={AddCoordinatsNewSchool} value={coordinate}/>*/}
-                        <input type={'text'} onChange={AddLatitudeCoordinateNewSchool}/>
+                        <input type={'text'} onChange={AddLatitudeCoordinateNewSchool} />
                         <input type={'text'} onChange={AddLongitudeCoordinateNewSchool}/>
                     </div>
                     <input type={'button'} name={'selectCoordinate'} value={'Указать объект на карте'}/>
