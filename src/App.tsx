@@ -107,30 +107,34 @@ function App() {
           </div>
           <div>
             <div>координаты</div>
-            <input value={newSchoolLatitude} type={'text'} placeholder={'Широта'} onChange={onChangeNewSchoolLatitudeHandler}/>
+            <input value={newSchoolLatitude} type={'text'} placeholder={'Широта'}
+                   onChange={onChangeNewSchoolLatitudeHandler}/>
 
-            <input value={newSchoolLongitude} type={'text'} placeholder={'Долгота'} onChange={onChangeNewSchoolLongitudeHandler}/>
+            <input value={newSchoolLongitude} type={'text'} placeholder={'Долгота'}
+                   onChange={onChangeNewSchoolLongitudeHandler}/>
           </div>
           {/*<input type={'button'} name={'selectCoordinate'} value={'Указать объект на карте'}/>*/}
-        {/*  <div>*/}
-        {/*  /!* возможно добавить изображение с видом метки*!/*/}
-        {/*  <input type={'button'} name={'changeMarkType'} value={'Сменить вид метки'}/>*/}
-        {/*  <input type={'text'} name={'markType'} placeholder={'Mark type'}/>*/}
-        {/*</div>*/}
+          {/*  <div>*/}
+          {/*  /!* возможно добавить изображение с видом метки*!/*/}
+          {/*  <input type={'button'} name={'changeMarkType'} value={'Сменить вид метки'}/>*/}
+          {/*  <input type={'text'} name={'markType'} placeholder={'Mark type'}/>*/}
+          {/*</div>*/}
           <input type={'button'} name={'addNewItSchoolMinsk'} value={'Добавить на карту'}
                  onClick={onClickAddSchoolButtonHandler}/>
         </div>
         <div className={'searchObject'}>
-          <div>Найти объекты</div>
+          <div>Найти школы</div>
           <div>
             {/*<div>Местность</div>*/}
-            <input type={'text'} name={'location'} placeholder={'Название региона'}
+            <input type={'text'} name={'location'} placeholder={'Название объекта'}
                    onChange={onChangeLocationNameHandler}/>
-            <div>
-              <div>координаты</div>
-              <input type={'text'} name={'latitudeCoordinate'} placeholder={'Latitude'}/>
-              <input type={'text'} name={'longitudeCoordinate'} placeholder={'Longitude'}/>
-            </div>
+            <input type={'button'} name={'searchObjects'} value={'Найти объект'}
+                   onClick={onClickSearchObjectsButtonHeddler}/>
+            {/*<div>*/}
+            {/*  <div>координаты</div>*/}
+            {/*  <input type={'text'} name={'latitudeCoordinate'} placeholder={'Latitude'}/>*/}
+            {/*  <input type={'text'} name={'longitudeCoordinate'} placeholder={'Longitude'}/>*/}
+            {/*</div>*/}
           </div>
           {/*<select>*/}
           {/*  <option>Школа для детей</option>*/}
@@ -138,11 +142,10 @@ function App() {
           {/*  <option>IT ВУЗ</option>*/}
           {/*</select>*/}
           <div>
-            <div>Количество объектов</div>
+            <div>Количество ближайших школ (1-5)</div>
             <input type={'number'} name={'objectNumber'} min="1" max="5"/>
           </div>
-          <input type={'button'} name={'searchObjects'} value={'Найти объекты'}
-                 onClick={onClickSearchObjectsButtonHeddler}/>
+          <input type={'button'} name={'showNearbySchools'} value={'Показать на карте'}/>
         </div>
       </div>
       <div className={'mapArea'}>
