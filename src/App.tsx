@@ -108,27 +108,27 @@ function App() {
   const onClickShowNearbyObjectsButtonHeddler = () => {
     onClickShowNearbyObjectsHeddler(searchObjectType, searchObjectLocation, streetName, searchObjectCount).then((foundObjects: any[]) => {
       if (foundObjects.length) {
-        let shownObjects: Array<displaySearchObjectType> = new Array()
-        //   foundObjects.map((obj: any) => {
-        //   return (
-        //   let description = obj.properties.description;
-        //   let id = v1();
-        //   let schoolName = obj.properties.name;
-        //   let newSchoolLatitude= obj.geometry.coordinates[1];
-        //   let newSchoolLongitude= obj.geometry.coordinates[0];
-        //   let phone: 777654
-        // )
-        // })
-        for (let i = 0; i < foundObjects.length; i++) {
-          shownObjects[i] = {
-            description: foundObjects[i].properties.description,
+        const shownObjects: Array<displaySearchObjectType> = foundObjects.map((obj: any) => {
+          return {
+            description: obj.properties.description,
             id: v1(),
-            schoolName: foundObjects[i].properties.name,
-            newSchoolLatitude: foundObjects[i].geometry.coordinates[1],
-            newSchoolLongitude: foundObjects[i].geometry.coordinates[0],
+            schoolName: obj.properties.name,
+            newSchoolLatitude: obj.geometry.coordinates[1],
+            newSchoolLongitude: obj.geometry.coordinates[0],
             phone: 777654
           }
-        }
+        })
+        // const shownObjects: Array<displaySearchObjectType> = new Array()
+        // for (let i = 0; i < foundObjects.length; i++) {
+        //   shownObjects[i] = {
+        //     description: foundObjects[i].properties.description,
+        //     id: v1(),
+        //     schoolName: foundObjects[i].properties.name,
+        //     newSchoolLatitude: foundObjects[i].geometry.coordinates[1],
+        //     newSchoolLongitude: foundObjects[i].geometry.coordinates[0],
+        //     phone: 777654
+        //   }
+        // }
         setDisplaySearchObjects(shownObjects);
       }
     })
