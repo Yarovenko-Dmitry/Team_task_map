@@ -1,24 +1,23 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useCallback, useState} from 'react';
 import './App.css';
-import {Map, RulerControl, TypeSelector, YMaps, ZoomControl, Placemark} from 'react-yandex-maps';
 import {onClickSearchObjectsHandler, onClickShowNearbyObjectsHeddler} from './hendlers/apiHendler';
 import {v1} from 'uuid';
-import pointer from '../src/assets/cut-map-marker-final.jpg'
+import {MyMappTEST} from './Components/MyMappTEST';
 
-type ItMinskSchoolType = {
+export type ItMinskSchoolType = {
   schoolDescription: string,
   id: string,
   schoolName: string,
-  newSchoolLatitude: any,
-  newSchoolLongitude: any
+  newSchoolLatitude: number,
+  newSchoolLongitude: number
 }
 
-type displaySearchObjectType = {
+export type displaySearchObjectType = {
   description: string,
   id: string,
   schoolName: string,
-  newSchoolLatitude: any,
-  newSchoolLongitude: any
+  newSchoolLatitude: number,
+  newSchoolLongitude: number
   phone: any
 }
 
@@ -107,12 +106,22 @@ function App() {
   }
 
   const onClickShowNearbyObjectsButtonHeddler = () => {
-    onClickShowNearbyObjectsHeddler(searchObjectType, searchObjectLocation, streetName, searchObjectCount ).then((foundObjects: any[]) => {
+    onClickShowNearbyObjectsHeddler(searchObjectType, searchObjectLocation, streetName, searchObjectCount).then((foundObjects: any[]) => {
       if (foundObjects.length) {
-        let shownObjects: Array<displaySearchObjectType> = new Array();
-        for (let i=0; i< foundObjects.length; i++){
+        let shownObjects: Array<displaySearchObjectType> = new Array()
+        //   foundObjects.map((obj: any) => {
+        //   return (
+        //   let description = obj.properties.description;
+        //   let id = v1();
+        //   let schoolName = obj.properties.name;
+        //   let newSchoolLatitude= obj.geometry.coordinates[1];
+        //   let newSchoolLongitude= obj.geometry.coordinates[0];
+        //   let phone: 777654
+        // )
+        // })
+        for (let i = 0; i < foundObjects.length; i++) {
           shownObjects[i] = {
-            description : foundObjects[i].properties.description ,
+            description: foundObjects[i].properties.description,
             id: v1(),
             schoolName: foundObjects[i].properties.name,
             newSchoolLatitude: foundObjects[i].geometry.coordinates[1],
@@ -125,11 +134,11 @@ function App() {
     })
   }
 
-  const getMapCoordinates = (e: any) => {
+  const getMapCoordinates = useCallback((e: any) => {
     let coordinatesSchool = e.get('coords');
     setNewSchoolLatitude(+coordinatesSchool[0]);
     setNewSchoolLongitude(+coordinatesSchool[1]);
-  }
+  }, [])
 
   return (
     <div className="App">
@@ -168,61 +177,26 @@ function App() {
                    onChange={onChangeSearchObjectTypeHandler}/>
             <input type={'text'} value={streetName} name={'streatName'} placeholder={'Название улицы'}
                    onChange={onChangeStreetNameHandler}/>
-            <input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20" title={'Сколько максимально вывести объектов от 1 до 20'}
+            <input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20"
+                   title={'Сколько максимально вывести объектов от 1 до 20'}
                    placeholder={"мах кол-во"} onChange={onChangeSearchObjectCountHandler}/>
           </div>
           <input type={'button'} name={'showNearbyObjects'} value={'Показать объект(ы) на карте'}
                  onClick={onClickShowNearbyObjectsButtonHeddler}/>
-                 <p>Объектов найдено : </p> {displaySearchObjects.length}
+          <p>Объектов найдено : </p> {displaySearchObjects.length}
         </div>
       </div>
       <div className={'mapArea'}>
-        <YMaps>
-          <div>
-            <Map className={'map'}
-                 onClick={(e: any) => {
-                   getMapCoordinates(e)
-                 }}
-                 state={{center: [searchObjectLatitude, searchObjectLongitude], zoom: 10}}>
-              <ZoomControl options={{position: {right: 10, top: 10}}}/>
-              <TypeSelector options={{position: {left: 10, top: 10}}}/>
-              <RulerControl options={{position: {right: 50, top: 10}}}/>
-              {displaySearchObjects.map((displaySearchObject: displaySearchObjectType) => <Placemark
-                  geometry={[displaySearchObject.newSchoolLatitude, displaySearchObject.newSchoolLongitude]}
-                  modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                  properties={{
-                    hintContent: displaySearchObject.schoolName,
-                    balloonContent: displaySearchObject.description,
-                  }}
-                  options={{
-                    iconLayout: 'default#image',
-                    iconImageHref: pointer,
-                    iconImageSize: [40, 50],
-                    iconImageOffset: [-20, -55],
-                  }}
-                />
-              )}
-              {itMinskSchools.map((itMinskSchool: ItMinskSchoolType) => <Placemark
-                  geometry={[itMinskSchool.newSchoolLatitude, itMinskSchool.newSchoolLongitude]}
-                  modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                  properties={{
-                    hintContent: itMinskSchool.schoolName,
-                    balloonContent: itMinskSchool.schoolDescription,
-                  }}
-                  options={{
-                    iconLayout: 'default#image',
-                    iconImageHref: 'https://image.freepik.com/free-vector/3d-gps-red-color-icon-dropping-on-street-map-on-white_175838-446.jpg',
-                    iconImageSize: [80, 60],
-                    iconImageOffset: [-40, -30],
-                  }}
-                />
-              )}
-            </Map>
-          </div>
-        </YMaps>
+        <MyMappTEST getMapCoordinates={getMapCoordinates}
+                    searchObjectLatitude={searchObjectLatitude}
+                    searchObjectLongitude={searchObjectLongitude}
+                    displaySearchObjects={displaySearchObjects}
+                    itMinskSchools={itMinskSchools}/>
       </div>
     </div>
   );
 }
 
 export default App;
+
+
