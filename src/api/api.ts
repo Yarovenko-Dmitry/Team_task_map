@@ -18,8 +18,8 @@ export const mainRequest = {
     return instanceSECONDtest_To_Get_Objects.get(`?text=${objectType}, ${location}, ${streetName} &type=biz&lang=ru_RU&results=${objectCount}`);
   }
 }
-
-axios.defaults.params = {};
+//
+// axios.defaults.params = {};
 export const setMobileInterceptors = (instance: any) => {
   instance.interceptors.request.use(
     async (config: any) => {
