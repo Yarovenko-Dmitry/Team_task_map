@@ -3,6 +3,8 @@ import './App.css';
 import {onClickSearchObjectsHandler, onClickShowNearbyObjectsHeddler} from './hendlers/apiHendler';
 import {v1} from 'uuid';
 import {MyMappTEST} from './Components/MyMappTEST';
+import {Switch} from '@material-ui/core';
+
 
 export type ItMinskSchoolType = {
   schoolDescription: string,
@@ -41,6 +43,14 @@ function App() {
 
   const [searchObjectLatitude, setSearchObjectLatitude] = useState<number>(50.5000);
   const [searchObjectLongitude, setSearchObjectLongitude] = useState<number>(30.5000);
+
+  const [showingAddObjectNavigation, setShowingAddObjectNavigation] = useState<boolean>(true);
+
+  const changeToggle = (e: any) => {
+    setShowingAddObjectNavigation(e.target.checked)
+    console.log('showingAddObjectNavigation ', showingAddObjectNavigation)
+  };
+
 
   const onChangeSchoolNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSchoolName(e.currentTarget.value);
@@ -129,51 +139,61 @@ function App() {
     setNewSchoolLongitude(+coordinatesSchool[1]);
   }, [])
 
+
   return (
     <div className="App">
-      <div className={'searchAddNavigation'}>
-        <div className={'addObject'}>
-          <div>Добавить школу</div>
-          <div>
-            <input type={'text'} name={'schoolName'} value={schoolName} placeholder={'Название школы'}
-                   onChange={onChangeSchoolNameHandler}/>
-          </div>
-          <div>
-            <input type={'text'} name={'schoolDescription'} value={schoolDescription} placeholder={'Описание'}
-                   onChange={onChangeDescriptionHandler}/>
-          </div>
-          <div>
-            <div>Координаты</div>
-            <input type={'text'} value={newSchoolLatitude} placeholder={'Широта'}
-                   onChange={onChangeNewSchoolLatitudeHandler}/>
-            <input type={'text'} value={newSchoolLongitude} placeholder={'Долгота'}
-                   onChange={onChangeNewSchoolLongitudeHandler}/>
-          </div>
-          <input type={'button'} name={'addNewItSchoolMinsk'} value={'Добавить на карту'}
-                 onClick={onClickAddSchoolButtonHandler}/>
+      <div className={'navigation'}>
+        <div>
+          <p>сменить режим</p>
+          <Switch
+            checked={showingAddObjectNavigation}
+            onChange={changeToggle}
+            name="toggle"
+          />
         </div>
-        <div className={'searchObject'}>
-          <div>Найти объект(ы)</div>
-          <div>
-            <input type={'text'} name={'locationName'} value={searchObjectLocation} placeholder={'Локация'}
-                   onChange={onChangeLocationNameHandler}/>
-            <input type={'button'} name={'searchLocation'} value={'Показать локацию на карте'}
-                   onClick={onClickSearchLocationButtonHeddler}/>
+        {showingAddObjectNavigation
+          ? <div className={'addObjectPanel'}>
+            <div>Добавить школу</div>
+            <div>
+              <input type={'text'} name={'schoolName'} value={schoolName} placeholder={'Название школы'}
+                     onChange={onChangeSchoolNameHandler}/>
+            </div>
+            <div>
+              <input type={'text'} name={'schoolDescription'} value={schoolDescription} placeholder={'Описание'}
+                     onChange={onChangeDescriptionHandler}/>
+            </div>
+            <div>
+              <div>Координаты</div>
+              <input type={'text'} value={newSchoolLatitude} placeholder={'Широта'}
+                     onChange={onChangeNewSchoolLatitudeHandler}/>
+              <input type={'text'} value={newSchoolLongitude} placeholder={'Долгота'}
+                     onChange={onChangeNewSchoolLongitudeHandler}/>
+            </div>
+            <input type={'button'} name={'addNewItSchoolMinsk'} value={'Добавить на карту'}
+                   onClick={onClickAddSchoolButtonHandler}/>
           </div>
-          <div>
-            <div>Уточнение поиска</div>
-            <input type={'text'} name={'searchObjectType'} value={searchObjectType} placeholder={'Тип объекта'}
-                   onChange={onChangeSearchObjectTypeHandler}/>
-            <input type={'text'} value={streetName} name={'streatName'} placeholder={'Название улицы'}
-                   onChange={onChangeStreetNameHandler}/>
-            <input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20"
-                   title={'Сколько максимально вывести объектов от 1 до 20'}
-                   placeholder={"мах кол-во"} onChange={onChangeSearchObjectCountHandler}/>
-          </div>
-          <input type={'button'} name={'showNearbyObjects'} value={'Показать объект(ы) на карте'}
-                 onClick={onClickShowNearbyObjectsButtonHeddler}/>
-          <p>Объектов найдено : </p> {displaySearchObjects.length}
-        </div>
+          : <div className={'searchObjectPanel'}>
+            <div>Найти объект(ы)</div>
+            <div>
+              <input type={'text'} name={'locationName'} value={searchObjectLocation} placeholder={'Локация'}
+                     onChange={onChangeLocationNameHandler}/>
+              <input type={'button'} name={'searchLocation'} value={'Показать локацию на карте'}
+                     onClick={onClickSearchLocationButtonHeddler}/>
+            </div>
+            <div>
+              <div>Уточнение поиска</div>
+              <input type={'text'} name={'searchObjectType'} value={searchObjectType} placeholder={'Тип объекта'}
+                     onChange={onChangeSearchObjectTypeHandler}/>
+              <input type={'text'} value={streetName} name={'streatName'} placeholder={'Название улицы'}
+                     onChange={onChangeStreetNameHandler}/>
+              <input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20"
+                     title={'Сколько максимально вывести объектов от 1 до 20'}
+                     placeholder={"мах кол-во"} onChange={onChangeSearchObjectCountHandler}/>
+            </div>
+            <input type={'button'} name={'showNearbyObjects'} value={'Показать объект(ы) на карте'}
+                   onClick={onClickShowNearbyObjectsButtonHeddler}/>
+            <p>Объектов найдено : </p> {displaySearchObjects.length}
+          </div>}
       </div>
       <div className={'mapArea'}>
         <MyMappTEST getMapCoordinates={getMapCoordinates}

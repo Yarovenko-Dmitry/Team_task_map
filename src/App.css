@@ -12,15 +12,15 @@
   width: 100vw;
 }
 
-.searchAddNavigation {
+.navigation {
   border: 1px solid red;
 }
 
-.addObject {
+.addObjectPanel {
   border: 1px solid #4cff00;
 }
 
-.searchObject {
+.searchObjectPanel {
   border: 1px solid #aa00ff;
 }
 
