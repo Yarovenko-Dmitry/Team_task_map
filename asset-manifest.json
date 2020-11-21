@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/Team_task_map/static/css/main.b915f91e.chunk.css",
-    "main.js": "/Team_task_map/static/js/main.eee66aa8.chunk.js",
-    "main.js.map": "/Team_task_map/static/js/main.eee66aa8.chunk.js.map",
-    "runtime-main.js": "/Team_task_map/static/js/runtime-main.8617b392.js",
-    "runtime-main.js.map": "/Team_task_map/static/js/runtime-main.8617b392.js.map",
-    "static/js/2.dd958dba.chunk.js": "/Team_task_map/static/js/2.dd958dba.chunk.js",
-    "static/js/2.dd958dba.chunk.js.map": "/Team_task_map/static/js/2.dd958dba.chunk.js.map",
-    "static/js/3.306c21e4.chunk.js": "/Team_task_map/static/js/3.306c21e4.chunk.js",
-    "static/js/3.306c21e4.chunk.js.map": "/Team_task_map/static/js/3.306c21e4.chunk.js.map",
+    "main.css": "/Team_task_map/static/css/main.e692dd59.chunk.css",
+    "main.js": "/Team_task_map/static/js/main.9ab7f361.chunk.js",
+    "main.js.map": "/Team_task_map/static/js/main.9ab7f361.chunk.js.map",
+    "runtime-main.js": "/Team_task_map/static/js/runtime-main.04c342c7.js",
+    "runtime-main.js.map": "/Team_task_map/static/js/runtime-main.04c342c7.js.map",
+    "static/js/2.4dd324c7.chunk.js": "/Team_task_map/static/js/2.4dd324c7.chunk.js",
+    "static/js/2.4dd324c7.chunk.js.map": "/Team_task_map/static/js/2.4dd324c7.chunk.js.map",
+    "static/js/3.c2b2fdae.chunk.js": "/Team_task_map/static/js/3.c2b2fdae.chunk.js",
+    "static/js/3.c2b2fdae.chunk.js.map": "/Team_task_map/static/js/3.c2b2fdae.chunk.js.map",
     "index.html": "/Team_task_map/index.html",
-    "static/css/main.b915f91e.chunk.css.map": "/Team_task_map/static/css/main.b915f91e.chunk.css.map",
-    "static/js/2.dd958dba.chunk.js.LICENSE.txt": "/Team_task_map/static/js/2.dd958dba.chunk.js.LICENSE.txt",
+    "static/css/main.e692dd59.chunk.css.map": "/Team_task_map/static/css/main.e692dd59.chunk.css.map",
+    "static/js/2.4dd324c7.chunk.js.LICENSE.txt": "/Team_task_map/static/js/2.4dd324c7.chunk.js.LICENSE.txt",
     "static/media/cut-map-marker-final.80322ebe.jpg": "/Team_task_map/static/media/cut-map-marker-final.80322ebe.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.8617b392.js",
-    "static/js/2.dd958dba.chunk.js",
-    "static/css/main.b915f91e.chunk.css",
-    "static/js/main.eee66aa8.chunk.js"
+    "static/js/runtime-main.04c342c7.js",
+    "static/js/2.4dd324c7.chunk.js",
+    "static/css/main.e692dd59.chunk.css",
+    "static/js/main.9ab7f361.chunk.js"
   ]
 }
