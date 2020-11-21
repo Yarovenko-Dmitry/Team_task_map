@@ -168,11 +168,12 @@ function App() {
                    onChange={onChangeSearchObjectTypeHandler}/>
             <input type={'text'} value={streetName} name={'streatName'} placeholder={'Название улицы'}
                    onChange={onChangeStreetNameHandler}/>
-            <input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20"
+            <input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20" title={'Сколько максимально вывести объектов от 1 до 20'}
                    placeholder={"мах кол-во"} onChange={onChangeSearchObjectCountHandler}/>
           </div>
           <input type={'button'} name={'showNearbyObjects'} value={'Показать объект(ы) на карте'}
                  onClick={onClickShowNearbyObjectsButtonHeddler}/>
+                 <p>Объектов найдено : </p> {displaySearchObjects.length}
         </div>
       </div>
       <div className={'mapArea'}>
