@@ -4,6 +4,8 @@ import {onClickSearchObjectsHandler, onClickShowNearbyObjectsHeddler} from './he
 import {v1} from 'uuid';
 import {MyMappTEST} from './Components/MyMappTEST';
 import {Switch} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { makeStyles,createStyles, Theme  } from '@material-ui/core/styles';
 
 
 
@@ -141,8 +143,20 @@ function App() {
     setNewSchoolLatitude(+coordinatesSchool[0]);
     setNewSchoolLongitude(+coordinatesSchool[1]);
   }, [])
+  const useStyles = makeStyles((theme:Theme) =>
+  createStyles({
+    root: {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      border: 0,
+      borderRadius: 10,
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: 'white',
+      height: 48,
+      padding: '0 30px',
+    },
+  }));
 
-
+  const classes = useStyles();
   return (
     <div className="App">
       <div className={'navigation'}>
@@ -172,16 +186,24 @@ function App() {
               <input type={'text'} value={newSchoolLongitude} placeholder={'Долгота'}
                      onChange={onChangeNewSchoolLongitudeHandler}/>
             </div>
-            <input type={'button'} name={'addNewItSchoolMinsk'} value={'Добавить на карту'}
-                   onClick={onClickAddSchoolButtonHandler}/>
+            <Button className={classes.root}
+                    variant="contained"
+                    type={'button'}
+                    name={'addNewItSchoolMinsk'}
+                    value={'Добавить на карту'}
+                    onClick={onClickAddSchoolButtonHandler}>Добавить на карту</Button>
           </div>
           : <div className={'searchObjectPanel'}>
             <div>Найти объект(ы)</div>
             <div>
               <input type={'text'} name={'locationName'} value={searchObjectLocation} placeholder={'Локация'}
                      onChange={onChangeLocationNameHandler}/>
-              <input type={'button'} name={'searchLocation'} value={'Показать локацию на карте'}
-                     onClick={onClickSearchLocationButtonHeddler}/>
+              <Button className={classes.root}
+                      variant="contained"
+                      type={'button'}
+                      name={'searchLocation'}
+                      value={'Показать локацию на карте'}
+                     onClick={onClickSearchLocationButtonHeddler}>Показать локацию на карте</Button>
             </div>
             <div>
               <div>Уточнение поиска</div>
@@ -193,8 +215,12 @@ function App() {
                      title={'Сколько максимально вывести объектов от 1 до 20'}
                      placeholder={"мах кол-во"} onChange={onChangeSearchObjectCountHandler}/>
             </div>
-            <input type={'button'} name={'showNearbyObjects'} value={'Показать объект(ы) на карте'}
-                   onClick={onClickShowNearbyObjectsButtonHeddler}/>
+            <Button className={classes.root}
+                    variant="contained"
+                    type={'button'}
+                    name={'showNearbyObjects'}
+                    value={'Показать объект(ы) на карте'}
+                    onClick={onClickShowNearbyObjectsButtonHeddler}>Показать объект(ы) на карте</Button>
             <p>Объектов найдено : </p> {displaySearchObjects.length}
           </div>}
       </div>
