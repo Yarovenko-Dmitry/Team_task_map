@@ -6,6 +6,7 @@ import {MyMappTEST} from './Components/MyMappTEST';
 import {Switch} from '@material-ui/core';
 
 
+
 export type ItMinskSchoolType = {
   schoolDescription: string,
   id: string,
@@ -44,7 +45,7 @@ function App() {
   const [searchObjectLatitude, setSearchObjectLatitude] = useState<number>(50.5000);
   const [searchObjectLongitude, setSearchObjectLongitude] = useState<number>(30.5000);
 
-  const [showingAddObjectNavigation, setShowingAddObjectNavigation] = useState<boolean>(true);
+  const [showingAddObjectNavigation, setShowingAddObjectNavigation] = useState<boolean>(false);
 
   const changeToggle = (e: any) => {
     setShowingAddObjectNavigation(e.target.checked)
@@ -77,6 +78,8 @@ function App() {
     addNewItSchoolMinsk(schoolDescription, schoolName);
     setSearchObjectLatitude(newSchoolLatitude);
     setSearchObjectLongitude(newSchoolLongitude);
+    setSchoolName('');
+    setSchoolDescription('');
   }
 
   const addNewItSchoolMinsk = (schoolDescription: string, schoolName: string) => {
