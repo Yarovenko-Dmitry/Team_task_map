@@ -2,7 +2,7 @@ import React, {ChangeEvent, useCallback, useState} from 'react';
 import './App.css';
 import {onClickSearchObjectsHandler, onClickShowNearbyObjectsHeddler} from './hendlers/apiHendler';
 import {v1} from 'uuid';
-import {MyMappTEST} from './Components/MyMappTEST';
+import {MyMapp} from './Components/MyMapp';
 import {Switch} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
@@ -27,33 +27,26 @@ export type displaySearchObjectType = {
 }
 
 function App() {
-
-    const TESTitMinskSchools: Array<ItMinskSchoolType> = [];
-    const StartDisplaySearchObjects: Array<ItMinskSchoolType> = [];
-
     const [schoolName, setSchoolName] = useState<string>('');
     const [schoolDescription, setSchoolDescription] = useState<string>('');
     const [newSchoolLatitude, setNewSchoolLatitude] = useState<any>(0);
     const [newSchoolLongitude, setNewSchoolLongitude] = useState<any>(0);
-    const [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>(TESTitMinskSchools);
+    const [itMinskSchools, setItMinskSchools] = useState<Array<ItMinskSchoolType>>([]);
 
-    const [searchObjectLocation, setSearchObjectLocation] = useState<string>('');
+    const [searchObjectLocation, setSearchObjectLocation] = useState<string>('Киев');
     const [searchObjectType, setSearchObjectType] = useState<string>('');
     const [streetName, setStreetName] = useState<string>('');
     const [searchObjectCount, setSearchObjectCount] = useState<number>(1);
-    const [displaySearchObjects, setDisplaySearchObjects] = useState<Array<any>>(StartDisplaySearchObjects);
-
+    const [displaySearchObjects, setDisplaySearchObjects] = useState<Array<any>>([]);
 
     const [searchObjectLatitude, setSearchObjectLatitude] = useState<number>(50.5000);
     const [searchObjectLongitude, setSearchObjectLongitude] = useState<number>(30.5000);
 
-    const [showingAddObjectNavigation, setShowingAddObjectNavigation] = useState<boolean>(false);
+    const [showingAddObjectNavigation, setShowingAddObjectNavigation] = useState<boolean>(true);
 
     const changeToggle = (e: any) => {
         setShowingAddObjectNavigation(e.target.checked)
-        console.log('showingAddObjectNavigation ', showingAddObjectNavigation)
     };
-
 
     const onChangeSchoolNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setSchoolName(e.currentTarget.value);
@@ -61,7 +54,6 @@ function App() {
 
     const onChangeDescriptionHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.value.length > 20) {
-            console.log('Value is more')
         }
         setSchoolDescription(e.currentTarget.value)
     }
@@ -139,10 +131,11 @@ function App() {
     }
 
     const getMapCoordinates = useCallback((e: any) => {
-        let coordinatesSchool = e.get('coords');
+        const coordinatesSchool = e.get('coords');
         setNewSchoolLatitude(+coordinatesSchool[0]);
         setNewSchoolLongitude(+coordinatesSchool[1]);
-    }, [])
+    }, []);
+
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -158,25 +151,11 @@ function App() {
 
     const classes = useStyles();
 
-    const useStylesField = makeStyles((theme: Theme) =>
-        createStyles({
-            root: {
-                '& .MuiTextField-root': {
-                    margin: theme.spacing(1),
-                    width: '25ch',
-                },
-            },
-        }),
-    );
-
-    //export default function FormPropsTextFields() {
-    const classesField = useStylesField();
-
     return (
         <div className="App">
             <div className={'navigation'}>
                 <div>
-                    <p>сменить режим</p>
+                    <p className={'changeMode'}>Сменить режим</p>
                     <Switch
                         checked={showingAddObjectNavigation}
                         onChange={changeToggle}
@@ -185,50 +164,45 @@ function App() {
                 </div>
                 {showingAddObjectNavigation
                     ? <div className={'addObjectPanel'}>
-                        <div>Добавить школу</div>
-                        {/*<form className={classes.root} noValidate autoComplete="off">*/}
+                        <div><p>Добавить школу</p></div>
                         <div>
-                            <TextField
-                                value={schoolName}
-                                onChange={onChangeSchoolNameHandler}
-                                id="outlined-helperText"
-                                label="Название школы"
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} name={'schoolName'} value={schoolName} placeholder={'Название школы'}*/}
-                            {/*       onChange={onChangeSchoolNameHandler}/>*/}
-                            <TextField
-                                value={schoolDescription}
-                                onChange={onChangeDescriptionHandler}
-                                id="outlined-helperText"
-                                label="Описание"
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} name={'schoolDescription'} value={schoolDescription} placeholder={'Описание'}*/}
-                            {/*       onChange={onChangeDescriptionHandler}/>*/}
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    value={schoolName}
+                                    onChange={onChangeSchoolNameHandler}
+                                    id="outlined-helperText"
+                                    label="Название школы"
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    value={schoolDescription}
+                                    onChange={onChangeDescriptionHandler}
+                                    id="outlined-helperText"
+                                    label="Описание"
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
                         </div>
                         <div>
-                            <div>Координаты</div>
-                            <TextField
-                                placeholder={'Широта'}
-                                value={newSchoolLatitude}
-                                onChange={onChangeNewSchoolLatitudeHandler}
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} value={newSchoolLatitude} placeholder={'Широта'}*/}
-                            {/*       onChange={onChangeNewSchoolLatitudeHandler}/>*/}
-                            <TextField
-                                placeholder={'Долгота'}
-                                value={newSchoolLongitude}
-                                onChange={onChangeNewSchoolLongitudeHandler}
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} value={newSchoolLongitude} placeholder={'Долгота'}*/}
-                            {/*       onChange={onChangeNewSchoolLongitudeHandler}/>*/}
+                            <div><p>Координаты</p></div>
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    title={'Широта'}
+                                    value={newSchoolLatitude}
+                                    onChange={onChangeNewSchoolLatitudeHandler}
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    title={'Долгота'}
+                                    value={newSchoolLongitude}
+                                    onChange={onChangeNewSchoolLongitudeHandler}
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
                         </div>
                         <Button className={classes.root}
                                 variant="contained"
@@ -238,19 +212,17 @@ function App() {
                                 onClick={onClickAddSchoolButtonHandler}>Добавить на карту</Button>
                     </div>
                     : <div className={'searchObjectPanel'}>
-                        <div>Найти объект(ы)</div>
+                        <div><p>Найти объект(ы)</p></div>
                         <div>
-                            <TextField
-                                value={searchObjectLocation}
-                                onChange={onChangeLocationNameHandler}
-                                id="outlined-helperText"
-                                label="Локация"
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} name={'locationName'} value={searchObjectLocation}*/}
-                            {/*       placeholder={'Локация'}*/}
-                            {/*       onChange={onChangeLocationNameHandler}/>*/}
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    value={searchObjectLocation}
+                                    onChange={onChangeLocationNameHandler}
+                                    id="outlined-helperText"
+                                    label="Локация"
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
                             <Button className={classes.root}
                                     variant="contained"
                                     type={'button'}
@@ -259,61 +231,59 @@ function App() {
                                     onClick={onClickSearchLocationButtonHeddler}>Показать локацию на карте</Button>
                         </div>
                         <div>
-                            <div>Уточнение поиска</div>
-                            <TextField
-                                value={searchObjectType}
-                                onChange={onChangeSearchObjectTypeHandler}
-                                id="outlined-helperText"
-                                label="Тип объекта"
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} name={'searchObjectType'} value={searchObjectType}*/}
-                            {/*       placeholder={'Тип объекта'}*/}
-                            {/*       onChange={onChangeSearchObjectTypeHandler}/>*/}
-                            <TextField
-                                value={streetName}
-                                onChange={onChangeStreetNameHandler}
-                                id="outlined-helperText"
-                                label="Название улицы"
-                                defaultValue="Default Value"
-                                variant="outlined"
-                            />
-                            {/*<input type={'text'} value={streetName} name={'streatName'} placeholder={'Название улицы'}*/}
-                            {/*       onChange={onChangeStreetNameHandler}/>*/}
-                            <TextField
-                                name={'objectCount'}
-                                value={searchObjectCount}
-                                //min="1" max="20"
-                                title={'Сколько максимально вывести объектов от 1 до 20'}
-                                placeholder={'мах кол-во'}
-                                onChange={onChangeSearchObjectCountHandler}
-                                id="outlined-number"
-                                type="number"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                variant="outlined"
-                            />
-                            {/*<input type={'number'} name={'objectCount'} value={searchObjectCount} min="1" max="20"*/}
-                            {/*       title={'Сколько максимально вывести объектов от 1 до 20'}*/}
-                            {/*       placeholder={'мах кол-во'} onChange={onChangeSearchObjectCountHandler}/>*/}
+                            <div><p>Уточнение поиска</p></div>
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    value={searchObjectType}
+                                    onChange={onChangeSearchObjectTypeHandler}
+                                    id="outlined-helperText"
+                                    label="Тип объекта"
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    value={streetName}
+                                    onChange={onChangeStreetNameHandler}
+                                    id="outlined-helperText"
+                                    label="Название улицы"
+                                    defaultValue="Default Value"
+                                    variant="outlined"
+                                /></div>
+                            <div className={'TextFieldInput'}>
+                                <TextField
+                                    name={'objectCount'}
+                                    value={searchObjectCount}
+                                    InputProps={{inputProps: {min: 1, max: 20}}}
+                                    title={'Сколько максимально вывести объектов от 1 до 20'}
+                                    placeholder={'мах кол-во'}
+                                    onChange={onChangeSearchObjectCountHandler}
+                                    id="outlined-number"
+                                    type="number"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    variant="outlined"
+                                /></div>
                         </div>
+                        <div className={'displaySearchObjectsBox'}>
+                            <div>Объектов найдено :</div>
+                            {displaySearchObjects.length} </div>
                         <Button className={classes.root}
                                 variant="contained"
                                 type={'button'}
                                 name={'showNearbyObjects'}
                                 value={'Показать объект(ы) на карте'}
                                 onClick={onClickShowNearbyObjectsButtonHeddler}>Показать объект(ы) на карте</Button>
-                        <p>Объектов найдено : </p> {displaySearchObjects.length}
+
                     </div>}
             </div>
             <div className={'mapArea'}>
-                <MyMappTEST getMapCoordinates={getMapCoordinates}
-                            searchObjectLatitude={searchObjectLatitude}
-                            searchObjectLongitude={searchObjectLongitude}
-                            displaySearchObjects={displaySearchObjects}
-                            itMinskSchools={itMinskSchools}/>
+                <MyMapp getMapCoordinates={getMapCoordinates}
+                        searchObjectLatitude={searchObjectLatitude}
+                        searchObjectLongitude={searchObjectLongitude}
+                        displaySearchObjects={displaySearchObjects}
+                        itMinskSchools={itMinskSchools}/>
             </div>
         </div>
     );

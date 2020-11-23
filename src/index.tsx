@@ -3,19 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-//import {MuiThemeProvider} from '@material-ui/core/styles';
-//import {getMuiTheme} from '@material-ui/core/styles';
-//import  {lightsBaseTheme } from 'material-ui/styles/index';
-
-//injectTapEventPlugin()
 
 ReactDOM.render(
 
   <React.StrictMode>
-      {/*<MuiThemeProvider muiTheme={getMuiTheme(lightsBaseTheme)}>*/}
     <App />
-          {/*</MuiThemeProvider>*/}
   </React.StrictMode>
 
         , document.getElementById('root')

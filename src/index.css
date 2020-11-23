@@ -1,1 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+#root {
+    display: flex;
+    width: 95vw;
+    height: 95vh;
+    align-items: center;
+    justify-content: center;
+}

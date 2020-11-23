@@ -1,27 +1,25 @@
 import axios from 'axios';
 
-const instance = axios.create({
-  // withCredentials: true,
+const addObjInstance = axios.create({ 
   baseURL: 'https://geocode-maps.yandex.ru/1.x/',
 });
 
-const instanceSECONDtest_To_Get_Objects = axios.create({
-  // withCredentials: true,
+const searchObjInstance = axios.create({ 
   baseURL: 'https://search-maps.yandex.ru/v1/',
 });
 
 export const mainRequest = {
   getObjectCoordinates(geocode: string) {
-    return instance.get(`?geocode=${geocode}`);
+    return addObjInstance.get(`?geocode=${geocode}`);
   },
   getDesplayObjects(objectType: string, location: string, streetName: string, objectCount: number) {
-    return instanceSECONDtest_To_Get_Objects.get(`?text=${objectType}, ${location}, ${streetName} &type=biz&lang=ru_RU&results=${objectCount}`);
+    return searchObjInstance.get(`?text=${objectType}, ${location}, ${streetName} &type=biz&lang=ru_RU&results=${objectCount}`);
   }
 }
 //
 // axios.defaults.params = {};
-export const setMobileInterceptors = (instance: any) => {
-  instance.interceptors.request.use(
+export const setAddObjInterceptors = (addObjInstance: any) => {
+    addObjInstance.interceptors.request.use(
     async (config: any) => {
       const apiKey = '62863b39-ff46-4e0f-a09b-34ed4079f28a'
       const format = 'json'
@@ -32,10 +30,10 @@ export const setMobileInterceptors = (instance: any) => {
   );
 }
 
-setMobileInterceptors(instance)
+setAddObjInterceptors(addObjInstance)
 
-export const setMobileInterceptorsSECONDtest_To_Get_Objects = (instanceSECONDtest_To_Get_Objects: any) => {
-  instanceSECONDtest_To_Get_Objects.interceptors.request.use(
+export const setSearchObjInterceptors = (searchObjInstance: any) => {
+    searchObjInstance.interceptors.request.use(
     async (config: any) => {
       const apiKey = '568dafa6-e76b-459f-adab-c4761fc807ed'
       config.params = {...config.params, apikey: apiKey}
@@ -45,4 +43,4 @@ export const setMobileInterceptorsSECONDtest_To_Get_Objects = (instanceSECONDtes
   );
 }
 
-setMobileInterceptorsSECONDtest_To_Get_Objects(instanceSECONDtest_To_Get_Objects)
+setSearchObjInterceptors(searchObjInstance)

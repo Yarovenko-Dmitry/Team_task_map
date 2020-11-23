@@ -3,7 +3,8 @@
   font-family: 'Roboto',sans-serif;
   display: flex;
   align-items: center;
-  margin: 5%;
+  /*margin: 5% 7%;*/
+
 }
 .mapview {
   position: absolute !important;
@@ -13,15 +14,25 @@
 }
 
 .navigation {
-  border: 1px solid red;
+  border: 5px solid #e89331;
+  width: 225px;
+  height: 624px;
+  border-radius: 7px;
 }
 
 .addObjectPanel {
-  border: 1px solid #4cff00;
+  border: 5px solid #d9327a;
+  border-radius: 7px;
 }
 
 .searchObjectPanel {
-  border: 1px solid #aa00ff;
+  border-radius: 7px;
+  border: 5px solid #b3b1b1;
+}
+.displaySearchObjectsBox {
+  border-radius: 7px;
+  border: 5px solid #353333;
+  margin-bottom: 2px;
 }
 
 .mapArea {
@@ -29,6 +40,11 @@
 }
 
 .map {
-  height: 750px;
-  width: 1000px;
+  height: 630px;
+  width: 1150px;
 }
+.TextFieldInput {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+

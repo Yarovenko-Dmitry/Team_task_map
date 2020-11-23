@@ -3,7 +3,7 @@ import pointer from '../assets/cut-map-marker-final.jpg';
 import React from 'react';
 import {displaySearchObjectType, ItMinskSchoolType} from '../App';
 
-type MyMappTestType = {
+type MyMappType = {
   getMapCoordinates: (e: any)=> void
   searchObjectLatitude: number
   searchObjectLongitude: number
@@ -11,7 +11,7 @@ type MyMappTestType = {
   itMinskSchools: Array<ItMinskSchoolType>
 }
 
-export const MyMappTEST = React.memo((props: MyMappTestType) => {
+export const MyMapp = React.memo((props: MyMappType) => {
   return (
     <YMaps>
       <div>
@@ -32,7 +32,7 @@ export const MyMappTEST = React.memo((props: MyMappTestType) => {
               }}
               options={{
                 iconLayout: 'default#image',
-                iconImageHref: pointer,
+                iconImageHref: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Map_marker.svg/667px-Map_marker.svg.png',
                 iconImageSize: [40, 50],
                 iconImageOffset: [-20, -55],
               }}
@@ -47,9 +47,9 @@ export const MyMappTEST = React.memo((props: MyMappTestType) => {
               }}
               options={{
                 iconLayout: 'default#image',
-                iconImageHref: 'https://image.freepik.com/free-vector/3d-gps-red-color-icon-dropping-on-street-map-on-white_175838-446.jpg',
-                iconImageSize: [80, 60],
-                iconImageOffset: [-40, -30],
+                iconImageHref: 'https://cdn.icon-icons.com/icons2/1320/PNG/128/-location_86865.png',
+                iconImageSize: [80, 80],
+                iconImageOffset: [-40, -55],
               }}
             />
           )}
