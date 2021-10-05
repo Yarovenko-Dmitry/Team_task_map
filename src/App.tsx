@@ -81,6 +81,8 @@ function App() {
         setSchoolDescription('');
     }
 
+
+
     const addNewItSchoolMinsk = (schoolDescription: string, schoolName: string) => {
         const newItSchoolMinsk = {
             id: v1(),
