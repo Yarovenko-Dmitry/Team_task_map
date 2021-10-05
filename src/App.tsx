@@ -7,6 +7,10 @@ import {Switch} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import {maxLengthCreator, required} from "./hendlers/validators";
+
+
+
 
 
 export type ItMinskSchoolType = {
@@ -57,6 +61,7 @@ function App() {
         }
         setSchoolDescription(e.currentTarget.value)
     }
+
 
     const onChangeNewSchoolLatitudeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const reg = /[^\d\.]/g
@@ -151,6 +156,9 @@ function App() {
 
     const classes = useStyles();
 
+    // const maxLength10 =
+
+
     return (
         <div className="App">
             <div className={'navigation'}>
@@ -194,6 +202,7 @@ function App() {
                                     onChange={onChangeNewSchoolLatitudeHandler}
                                     defaultValue="Default Value"
                                     variant="outlined"
+                                    validate = {[required,maxLengthCreator(3)]}
                                 /></div>
                             <div className={'TextFieldInput'}>
                                 <TextField
@@ -202,6 +211,7 @@ function App() {
                                     onChange={onChangeNewSchoolLongitudeHandler}
                                     defaultValue="Default Value"
                                     variant="outlined"
+                                    validate = {[required,maxLengthCreator(3)]}
                                 /></div>
                         </div>
                         <Button className={classes.root}
